@@ -1,5 +1,6 @@
 package application;
-	
+
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane; 
 
@@ -18,6 +20,7 @@ public class Main extends Application {
 	public Player P2= new Player("GREEN");
 	public GameData DATA = new GameData();
 	public String currentTurn = "P1";
+	private Image icon = new Image(getClass().getResourceAsStream("icon.png"));
 
 	
 	public void init() {
@@ -37,7 +40,14 @@ public class Main extends Application {
                 
             }
         }
+        primaryStage.setTitle("Mitosis");
+        primaryStage.setOnCloseRequest(e -> {
+            // Release resources
+            stop();
+        });
         
+        primaryStage.setFullScreen(true);
+        primaryStage.getIcons().add(icon);
         AnimationTimer timer = new AnimationTimer() {
             long lastTime = System.nanoTime();
             long interval = 1000000000 / 60; // 60fps update interval
@@ -54,16 +64,12 @@ public class Main extends Application {
                     Scene scene = new Scene(root, CONST.getSCREEN_X(), CONST.getSCREEN_Y());
                     scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
                     primaryStage.setScene(scene);
-                    primaryStage.setTitle("Mitosis");
-                    primaryStage.setOnCloseRequest(e -> {
-                        // Release resources
-                        stop();
-                    });
                     primaryStage.show();
+                    
                 }
             }
         };
-		
+        
 		timer.start();
 		
 		

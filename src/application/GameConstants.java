@@ -1,11 +1,11 @@
 package application;
 
 public class GameConstants {
-	private int SCREEN_X = 1920;
-	private int SCREEN_Y = 1080;
+	private int SCREEN_X = 1280;
+	private int SCREEN_Y = 720;
 	private int TILE_SIZE = 50;
-	private int GAME_ROW = 15;
-	private int GAME_COL = 30;
+	private int GAME_ROW = 14;
+	private int GAME_COL = 15;
 	
 	public int getSCREEN_X() {
 		return this.SCREEN_X;
