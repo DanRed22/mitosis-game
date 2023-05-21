@@ -49,10 +49,11 @@ public class Tile extends StackPane{
 		tile.setStrokeWidth(3d);
 		cellCountText = new Text(Integer.toString(getCellcount()));
 		System.out.println(Main.CONST.getTILE_SIZE());
-		this.setMouseTransparent(true);
+
 		setOnMouseClicked(event -> {
             // increase the cell count and update the text
 			System.out.println("Clicked on tile");
+			System.out.println("TILE COUNT: "+ this.cellcount+" TILE COL: "+this.color);
 		    addCellcount(DATA);
 		    cellCountText.setText(Integer.toString(getCellcount()));
             
@@ -81,27 +82,32 @@ public class Tile extends StackPane{
 	}
 	
 	public void addCellcount(GameData DATA) {
-//		if ((m.currentTurn == "P1" && this.getColor() == "RED" )|| 
-//			(m.currentTurn == "P2" && this.getColor() == "GREEN" )){
-		if (this.getColor() == "WHITE" || this.getColor() == "RED") {
-			++this.cellcount;
-			if (cellcount > 3) {
-				//explode
-				this.cellcount = 1;
-			}
-			this.setColor("RED");
-			
+		if (this.getColor().equals("WHITE")) {
+		    if (DATA.getCurrentTurn().equals("P1")) {
+		        this.setColor("Green");
+		    } else {
+		        this.setColor("RED");
+		    }
 		}
+
+		if (this.getColor().equals("GREEN") && this.DATA.getCurrentTurn().equals("P1")) {
+		    if (this.cellcount <= 3) {
+		        this.cellcount++;
+		    } else {
+		        this.cellcount = 1;
+		    }
+		}
+
+		if (this.getColor().equals("RED") && this.DATA.getCurrentTurn().equals("P2")) {
+		    if (this.cellcount <= 3) {
+		        this.cellcount++;
+		    } else {
+		        this.cellcount = 1;
+		    }
+		}
+
 		
-		if (this.getColor() == "WHITE" || this.getColor() == "GREEN") {
-			++this.cellcount;
-			if (cellcount > 3) {
-				//explode
-				this.cellcount = 1;
-			}
-			this.setColor("GREEN");
-			
-		}
+		
 		
 		
 		if(color.equals("RED")) {
@@ -128,14 +134,24 @@ public class Tile extends StackPane{
                 	imageview.setImage(greenTex3);
                     break;
             }
+        } else {
+        	imageview.setImage(defaultTex);
         }
 		
+		if (DATA.getCurrentTurn() == "P1") {
+			DATA.setCurrentTurn("P2");
+		}else {
+			DATA.setCurrentTurn("P1");
+		}
 		
 		
-		//}
 		
 	}
 
+	public Text getCellCountText() {
+        return cellCountText;
+    }
+	
 	public GameData getDATA() {
 		return DATA;
 	}
